@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Textarea, Select, Button, Box, Flex, Heading } from '@chakra-ui/react';
+import { Textarea, Select, Button, Box, Flex, Heading, Grid, Text } from '@chakra-ui/react';
 
 const Converter = () => {
     const [inputCode, setInputCode] = useState('');
-    const [language, setLanguage] = useState('');
+    const [language, setLanguage] = useState('Python');
     const [convertedCode, setConvertedCode] = useState('');
     const [loading, setLoading] = useState(false)
 
@@ -85,78 +85,119 @@ const Converter = () => {
 
 
     return (
-        <Box p={4} w="60%" h="auto"  display="flex" border="1px solid black" flexDirection="column" alignItems="center" justifyContent="center" margin="auto" mt="40px" >
-            <Heading as="h1" size="xl" mb={4}>
-                Code Converter
-            </Heading>
-
-            <Flex mb={4} width="80%" gap={10} >
-                <Heading as="h2" size="md" mb={2} mt={"10%"}>
-                    Input:
-                </Heading>
-                <Textarea
-                    value={inputCode}
-                    onChange={handleCodeChange}
-                    placeholder="Enter code..."
-                    size="lg"
-                    width="100%"
-                    height="200px"
-                />
-            </Flex>
-
-
-            <Flex width="100%" margin="auto"  justifyContent="space-evenly" alignItems="center" mb={10}>
-                
-                <Select
-                    value={language}
-                    onChange={handleLanguageChange}
-                    placeholder="Select Language"
-                    size="md"
-                    mt={4}
-                    width="20%"
-                >
-                    <option value="Python">Python</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="C++">C++</option>
-                    <option value="C#">C#</option>
-                    <option value="PHP">PHP</option>
-                    {/* Add more language options */}
-                </Select>
-
-
-
-
-
-                <Button colorScheme="orange" onClick={handleConvert} >
-                    Convert
-                </Button>
-                <Button colorScheme="green" onClick={handleDebug} >
-                    Debugger
-                </Button>
-                <Button colorScheme="purple" onClick={handleQuality} >
-                    Check Quality
-                </Button>
-
-            </Flex>
-
-
-
-
-
-            <Flex mb={4} width="80%" gap={10}>
-                <Heading as="h2" size="md" mb={2} mt={"10%"}>
-                    Output:
-                </Heading>
-                <Textarea
-                    value={loading ? 'Please wait while response is loading....' : convertedCode}
-                    readOnly
-                    placeholder="Converted code will appear here..."
-                    size="lg"
-                    width="100%"
-                    height="200px"
-                />
-            </Flex>
+        <Grid
+        height="100vh"
+        templateColumns={{ base: '1fr', lg: '1fr 1fr' }}
+        templateRows={{ base: '1fr', lg: 'auto' }}
+      >
+        <Box padding="4"  color="brand.900">
+          <Text fontSize="2xl"  textTransform="uppercase"
+            letterSpacing="wide" fontWeight="extrabold" mb="2">
+            Code Converter
+          </Text>
+          <Text fontSize="lg" color="brand.500" mb="4">
+            Convert and debug your code with quality checks.....
+          </Text>
+          <Textarea
+            value={inputCode}
+            onChange={(e) => setInputCode(e.target.value)}
+            placeholder="Enter code here....."
+            height="80vh"
+            resize="none"
+            fontFamily="monospace"
+            fontSize="sm"
+            backgroundColor="brand.900"
+            color="white"
+            borderColor="brand.800"
+            _hover={{ borderColor: 'brand.700' }}
+            _focus={{ borderColor: 'brand.700' }}
+          />
         </Box>
+        <Box
+          padding="4"
+          borderLeft={{ base: 'none', lg: '1px solid' }}
+          borderColor="gray.200"
+          backgroundColor="white"
+        >
+          <Text fontSize="xl" fontWeight="bold" mb="4">
+            Options
+          </Text>
+          <Select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            marginBottom="4"
+          >
+            <option value="">Select Language</option>
+            <option value="Python">Python</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="C++">C++</option>
+            <option value="C#">C#</option>
+            <option value="PHP">PHP</option>
+          </Select>
+          <Button
+            onClick={handleConvert}
+            marginBottom="2"
+            backgroundColor="brand.800"
+            color="white"
+            _hover={{ backgroundColor: 'brand.900' }}
+            _focus={{ backgroundColor: 'brand.900' }}
+            marginRight="2"
+            fontWeight="bold"
+            textTransform="uppercase"
+            letterSpacing="wide"
+            paddingX="6"
+            isDisabled={inputCode==""}
+          >
+            Convert
+          </Button>
+          <Button
+            onClick={handleDebug}
+            marginBottom="2"
+            backgroundColor="brand.800"
+            color="white"
+            _hover={{ backgroundColor: 'brand.900' }}
+            _focus={{ backgroundColor: 'brand.900' }}
+            marginRight="2"
+            fontWeight="bold"
+            textTransform="uppercase"
+            letterSpacing="wide"
+            paddingX="6"
+            isDisabled={inputCode==""}
+          >
+            Debug
+          </Button>
+          <Button
+            onClick={handleQuality}
+            marginBottom="2"
+            backgroundColor="brand.800"
+            color="white"
+            _hover={{ backgroundColor: 'brand.900' }}
+            _focus={{ backgroundColor: 'brand.900' }}
+            marginRight="2"
+            fontWeight="bold"
+            textTransform="uppercase"
+            letterSpacing="wide"
+            paddingX="6"
+            isDisabled={inputCode==""}
+          >
+            Quality Check
+          </Button>
+          <Textarea
+            value={loading ? 'Please wait while response is loading....' : convertedCode}
+            readOnly
+            height="60vh"
+            resize="none"
+            placeholder="Converted code will appear here..."
+            fontFamily="monospace"
+            fontSize="sm"
+            backgroundColor="brand.50"
+            borderColor="gray.300"
+            _hover={{ borderColor: 'gray.400' }}
+            _focus={{ borderColor: 'gray.400' }}
+            
+          />
+        </Box>
+      </Grid>
     );
 };
 
